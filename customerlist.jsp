@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -18,80 +18,7 @@ $(function(){
       $parentObj = $("body");
     }
     
-  // ★★체크했을 때 해당하는 조건의 리스트 불러오기
-  /* var arrayParam = new Array();
-      
-    $("input:checkbox[name='searchCk']").click(function(){
-      //var checkedId = $(this).attr("value");
-      //$(this).prop("checked", true);
-      //var arrayParam = new Array();
-    
-      //체크했을때 첫번째 값만 불러오기
-      $("input:checkbox[name='searchCk']:checked").each(function(){
-        //$("input:checkbox[name='searchCk']").prop('checked',this.checked);
-    		arrayParam.push($(this).val());
-    		console.log(arrayParam[0]);
-    		
-    	
-      
-      	// 다중체크 방지 - 1개씩만 가능 - 체크없애고 이동 구현해야함
-       if(arrayParam.length>1){
-			alert("체크는 하나까지 가능해요.");
-			this.checked = false;
-		}
-      });
-    });	 */
-      	
-       /* var searchCk = arrayParam[0];
-        $.ajax({
-           url: "selectAll.do",
-           method :"POST",
-           data:{
-                "searchCk" : searchCk
-           },
-           success:function(responseData){
-           var result = responseData.trim();
-           if(result.msg =="-1"){
-             alert("실패");
-           }
-           //$parentObj.empty();
-           $parentObj.html(result);  
-           // $(".selectById").show();
-         //$(".selectAll").hide();
-           
-           }
-         });return false;    */
-         
-         
-    
-  
-  
-    //★★검색하기  
-    
-     
-   
-    /* 
-        var arrayParam = null;  
-	$("input:checkbox[name='searchCk']").click(function(){
-    	
-    	var dndnd = $("input:checkbox[name='searchCk']:checked").val();
-    	console.log("dndnd"+dndnd);
 
-    	arrayParam = new Array(); 
-    	$("input:checkbox[name='searchCk']:checked").each(function(){
-    		
-        	arrayParam.push($(this).val());
-        	console.log(arrayParam[0]);
-        	
-        	if(arrayParam.length>1){
-				this.checked = false;
-				alert("체크는 하나까지 가능해요.");
-		   }
-    	}); 
-    	
-    	
-    	
-    });  */
     
     var arrayParam = null;  
 
@@ -358,31 +285,9 @@ font-size: xx-small;
 <div class="selectAll">
 <h1> 전체고객 리스트</h1>
 
-
-
-
-<!-- 고객검색창 -->
-  <!-- <div class="searchforid">
-   <form class="search">
-    <select name = "searchItem" style="height: 21px">
-     <option value = "id" selected>아이디로 검색</option>
-     </select> 
-    <input type="search"  name="searchValue" >
-    <input type="button"  name="searchValueBt"   value="검색" >
-  </form>
-  </div>
-  <br><br> -->
   <jsp:include page="searchcheck.jsp"></jsp:include>
-  
-<%--  <div class="customermodBt">
- 체크시 사용버튼 :
- <button class="delete" id="${customers.id}" value="delete">삭제</button>
- <button class="blackcon" id="${customers.id}" value="blackcon">관리대상</button>
- <button class="clear" id="${customers.id}" value="clear">초기화</button>
- </div> --%>
- 
+
  <br><br>
- 
  
  <!-- 고객 리스트 보여주기 -->
  <table class="selectAlltable" >
@@ -432,45 +337,6 @@ font-size: xx-small;
 
 </div>
 
- 
-
- 
- 
- 
- 
-<%-- <div class="selectById">
- <h1>검색결과</h1>
- 
- <table >
-    <tr id="main">
-    <td style ="width: 100px">아이디</td>
-    <td style ="width: 100px">비번</td> 
-    <td style ="width: 80px">이름</td> 
-    <td style ="width: 80px">상태</td> 
-    <td style ="width: 200px">변경하기</td> 
-    </tr>  
-    
-    <c:set var="customer" value="${requestScope.c}"/>
-    
-    <tr>
-     <td class="cusId">${customer.id}</td>
-     <td>${customer.password}</td>
-     <td>${customer.name}</td>
-     <td>${customer.status}</td>
-     <td>
-     <button class="delete"  value="delete">삭제</button>
-     <button class="blackcon"  value="blackcon">관리대상</button>
-     <button class="clear" id="${customers.id}" value="clear">초기화</button>
-     
-     <!-- <input type="button" class="delete" value="삭제"   >
-     <input type="button" class="blackcon" value="관리대상"> -->
-     </td>
-   </tr>
-
- </table>
- <br>
- 
- </div> --%>
 
 </body>
 </html>
