@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderInfoMapper">
+
+<!-- 참조할 맵을 다시한번 설정: orderInfo 안에있는 객체들 다시정의-->
+<resultMap id="OrderInfoMap"  type="OrderInfo" >
+	<!-- 기본키 설정 -->
+	<id column="info_no" property="info_no"/>
+	<result column="info_date"  property="info_date"/>
+	<!-- 연관관계용 -->
+	<association property="info_c" javaType="Customer">
+		<result column="ID"  property="id" />
+		<result column="PASSWORD"  property="password" />
+		<result column="NAME"  property="name" />
+		<!-- 실제 컬럼명 -->   <!-- 필드명과동일 -->
+	</association>
+	
+	<!-- orderInfo 안에있는 orderLine 타입의 객체들 -->
+	<collection property="lines"  ofType="OrderLine" >
+	<!-- 기본키 설정 -->
+	<id column="LINE_INFO_NO" property="LINE_INFO_NO"/>
+	
+		<result column="line_quantity"  property="line_quantity"/>
+		<result column="line_info_no"  property="line_info_no"/>
+		
+		<!-- 연관관계용 -->
+		<association property="line_prod_no" javaType="Product">
+			<result column="line_prod_no"  property="prod_no" />
+			<result column="PROD_NAME"  property="prod_name" />
+			<result column="PROD_PRICE"  property="prod_price" />
+			          <!-- 실제 컬럼명 -->  <!-- 필드명과동일 -->
+		</association>		
+	</collection>
+	
+</resultMap>
+
+<!-- 아래설정할경우 lines 자료의 null이 뜬다 resultMap 다시한번 설정한다-->
+<select id="selectById" parameterType="String" 
+						resultMap="OrderInfoMap">
+select info_no , info_id ,NAME , info_date , line_prod_no ,PROD_NAME , PROD_PRICE , line_quantity
+from order_info info join customer c
+on info.INFO_ID = c.id left outer join order_line line
+on info.info_no = line.line_info_no left outer join product prod
+on line.LINE_PROD_NO = prod.PROD_NO
+where info_id  = #{id}
+order by info_no , info_id
+</select>
+
+
+<insert id="insertInfo"  parameterType="OrderInfo">
+insert into order_info (info_no, info_date, info_id) values(order_seq.nextval,SYSDATE, #{info_c.id})
+</insert>
+
+<insert id="insertLine" parameterType="OrderLine">
+	<selectKey keyProperty="line_info_no"  order="BEFORE"  resultType="int">
+	select NVL(max(info_no),0) from order_info
+	</selectKey>
+insert into order_line(line_info_no, line_prod_no, line_quantity) values(order_seq.currval, #{line_prod_no.prod_no} , #{line_quantity})
+</insert>	
+
+</mapper>
+
+
+
+
+
+
